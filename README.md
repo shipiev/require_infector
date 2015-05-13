@@ -26,7 +26,7 @@ Or install it yourself as:
 
     # plugins/awesome_plugin/init.rb
     Rails.config.to_prepare do
-        require_infector 'awesome_plugin', 'user', 'issue', 'user_controller', 'issue_helper'
+        require_infector 'awesome_plugin', 'user', 'issue', 'users_controller', 'issues_helper'
     end
 
 ## Contributing
