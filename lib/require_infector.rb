@@ -10,7 +10,11 @@ module RequireInfector
   #   end
   def require_infector(plugin_name, *resources)
     resources.each do |resource|
-      require_dependency resource rescue Rails.logger.warn "Can't find '#{resource}' for require_dependency"
+      begin
+        require_dependency resource
+      rescue LoadError
+        Rails.logger.warn "Can't find '#{resource}' for require_dependency"
+      end
 
       resource_patch = [plugin_name, 'infectors', resource].join('/')
       resource_constant, resource_patch_constant = [resource, resource_patch].map(&:camelize).map(&:constantize)
