@@ -23,10 +23,13 @@ Or install it yourself as:
     plugins/awesome_plugin/lib/awesome_plugin/infectors/issue.rb
     plugins/awesome_plugin/lib/awesome_plugin/infectors/users_controller.rb
     plugins/awesome_plugin/lib/awesome_plugin/infectors/issues_helper.rb
+    plugins/awesome_plugin/lib/awesome_plugin/infectors/form/builder.rb
 
     # plugins/awesome_plugin/init.rb
     Rails.config.to_prepare do
-        require_infector 'awesome_plugin', 'user', 'issue', 'users_controller', 'issues_helper'
+        require_infector 'awesome_plugin', ['user', 'issue', 'users_controller', 'issues_helper']
+        require_infector 'awesome_plugin', ['form/builder'], skip_require_dependency: true
+        # or require_infector 'awesome_plugin', 'form/builder', skip_require_dependency: true
     end
 
 ## Contributing
