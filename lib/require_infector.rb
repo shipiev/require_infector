@@ -10,10 +10,19 @@ module RequireInfector
   #     require_infector 'awesome_plugin', ['user', 'issue', 'user_controller', 'issue_helper']
   #   end
   def require_infector(plugin_name, resources, options = {})
+    default_options = {
+        dir: 'infectors',
+        prefix: nil,
+        postfix: nil
+    }
+
+    options = default_options.merge options
+
     resources.to_a.each do |resource|
       require_dependency resource unless options[:skip_require_dependency]
 
-      resource_patch = [plugin_name, 'infectors', resource].join('/')
+      infector_name = [options[:prefix], resource, options[:postfix]].select(&:present?).join('_')
+      resource_patch = [plugin_name, options[:dir], infector_name].select(&:present?).join('/')
       resource_constant, resource_patch_constant = [resource, resource_patch].map(&:camelize).map(&:constantize)
 
       resource_constant.send(:include, resource_patch_constant) unless resource_constant.included_modules.include? resource_patch_constant
