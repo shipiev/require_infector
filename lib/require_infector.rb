@@ -31,6 +31,7 @@ module RequireInfector
         end
       end
     end
+  end
 end
 
 Kernel.send(:include, ::RequireInfector) unless Kernel.included_modules.include? ::RequireInfector
